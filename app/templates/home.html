@@ -23,62 +23,67 @@
 <body class="bg-gray-100 text-gray-900">
     <!-- Header Section -->
     <header class="bg-blue-500 text-white py-6">
-        <div class="container mx-auto flex flex-col md:flex-row items-center md:justify-between relative">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between relative space-y-4 md:space-y-0">
             <!-- Main Title Section -->
-            <div class="text-center flex-grow mb-4 md:mb-0">
-                <h1 class="text-4xl font-bold">Welcome to JAMB Prep</h1>
-                <p class="mt-2 text-lg">Your ultimate destination for acing the JAMB Exam!</p>
+            <div class="text-center flex-grow">
+                <h1 class="text-3xl md:text-4xl font-bold">Welcome to JAMB Prep</h1>
+                <p class="mt-2 text-base md:text-lg">Your ultimate destination for acing the JAMB Exam!</p>
             </div>
             <!-- User Info Section -->
-            <div class="absolute top-4 right-4 md:relative md:top-0 md:right-0 text-right">
-              {% if current_user.is_authenticated %}
-                <p class="text-lg hidden md:block">Hello, <strong>{{ current_user.username }}</strong></p>
-                <a href="{{ url_for('user.logout') }}" class="btn-primary px-3 py-1 rounded text-md">Logout</a>
-                {% else%}
-                <a href="{{ url_for('user.login') }}" class="btn-primary px-3 py-1 rounded text-md">Login</a>
-
+            <div class="flex flex-col md:flex-row items-center md:space-x-4 text-center md:text-right">
+                {% if current_user.is_authenticated %}
+                <p class="text-sm md:text-lg">Hello, <strong>{{ current_user.username }}</strong></p>
+                <a href="{{ url_for('user.logout') }}" class="btn-primary px-4 py-2 rounded text-sm md:text-md mt-2 md:mt-0">Logout</a>
+                {% else %}
+                <a href="{{ url_for('user.login') }}" class="btn-primary px-4 py-2 rounded text-sm md:text-md mt-2 md:mt-0">Login</a>
                 {% endif %}
-
             </div>
         </div>
     </header>
 
     <!-- Features Section -->
-    <section class="container mx-auto py-12 px-6">
+    <section class="container mx-auto py-12 px-4 sm:px-6">
         <h2 class="text-2xl font-bold mb-6 text-center">Why Choose JAMB Prep?</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             <div class="bg-white p-6 rounded shadow text-center">
-                <i class="fas fa-users text-blue-500 text-4xl mb-4"></i>
-                <h3 class="text-xl font-bold">Peer-to-Peer Chat</h3>
-                <p class="mt-2">Collaborate with fellow students to share tips and solve challenges.</p>
-                <p class="mt-2 font-bold">Coming soon</p>
+                <i class="fas fa-users text-blue-500 text-3xl sm:text-4xl mb-4"></i>
+                <h3 class="text-lg sm:text-xl font-bold">Peer-to-Peer Chat</h3>
+                <p class="mt-2 text-sm sm:text-base">Collaborate with fellow students to share tips and solve challenges.</p>
+                <p class="mt-2 font-bold text-sm sm:text-base">Coming soon</p>
             </div>
             <div class="bg-white p-6 rounded shadow text-center">
-                <i class="fas fa-clock text-blue-500 text-4xl mb-4"></i>
-                <h3 class="text-xl font-bold">Mock Exams</h3>
-                <p class="mt-2">Simulate real JAMB exams with timed practice sessions.</p>
+                <a href="{{url_for('exam.select_subject')}}">
+                    <i class="fas fa-clock text-blue-500 text-3xl sm:text-4xl mb-4"></i>
+                    <h3 class="text-lg sm:text-xl font-bold">Mock Exams</h3>
+                    <p class="mt-2 text-sm sm:text-base">Simulate real JAMB exams with timed practice sessions.</p>
+                </a>
             </div>
             <div class="bg-white p-6 rounded shadow text-center">
-                <i class="fas fa-chart-line text-blue-500 text-4xl mb-4"></i>
-                <h3 class="text-xl font-bold">Track Your Progress</h3>
-                <p class="mt-2">Analyze your performance with detailed progress reports.</p>
+                <a href="{{url_for('exam.score_history')}}">
+                    <i class="fas fa-chart-line text-blue-500 text-3xl sm:text-4xl mb-4"></i>
+                    <h3 class="text-lg sm:text-xl font-bold">Track Your Progress</h3>
+                    <p class="mt-2 text-sm sm:text-base">Analyze your performance with detailed progress reports.</p>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- Call-to-Action Section -->
-    <section class="bg-blue-500 text-white py-12">
-        <div class="container mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-4">Ready to Ace Your JAMB Exam?</h2>
-            <p class="mb-6">Sign up now and start your journey to success!</p>
-            <a href="{{ url_for('exam.select_subject') }}" class="btn-primary px-6 py-3 rounded text-lg">Take a free practice test</a>
+    <section class="bg-blue-500 text-white py-12 px-4 sm:px-6">
+        <div class="container mx-auto text-center space-y-4">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4">Ready to Ace Your JAMB Exam?</h2>
+            <p class="mb-6 text-sm md:text-base">Sign up now and start your journey to success!</p>
+            <div class="flex flex-col sm:flex-row justify-center sm:space-x-4">
+                <a href="{{ url_for('exam.select_subject') }}" class="btn-primary px-2 md:px-3 py-2 rounded text-sm md:text-lg mb-4 sm:mb-0">Take a Free Practice Test</a>
+                <a href="{{ url_for('exam.score_history') }}" class="btn-primary px-2 md:px-3 py-2 rounded text-sm md:text-lg">Check Your Previous Scores</a>
+            </div>
         </div>
     </section>
 
     <!-- Footer Section -->
     <footer class="bg-gray-800 text-gray-300 py-6">
         <div class="container mx-auto text-center">
-            <p>&copy; 2024 JAMB Prep. All Rights Reserved.</p>
+            <p class="text-sm">&copy; Olaiwon Ismail 2025 JAMB Prep. All Rights Reserved.</p>
         </div>
     </footer>
 </body>
