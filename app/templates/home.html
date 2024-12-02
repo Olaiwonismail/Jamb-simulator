@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAMB Prep</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+        .btn-primary {
+            background-color: #2b6cb0;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background-color: #2c5282;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <!-- Header Section -->
+    <header class="bg-blue-500 text-white py-6">
+        <div class="container mx-auto flex flex-col md:flex-row items-center md:justify-between relative">
+            <!-- Main Title Section -->
+            <div class="text-center flex-grow mb-4 md:mb-0">
+                <h1 class="text-4xl font-bold">Welcome to JAMB Prep</h1>
+                <p class="mt-2 text-lg">Your ultimate destination for acing the JAMB Exam!</p>
+            </div>
+            <!-- User Info Section -->
+            <div class="absolute top-4 right-4 md:relative md:top-0 md:right-0 text-right">
+              {% if current_user.is_authenticated %}
+                <p class="text-lg hidden md:block">Hello, <strong>{{ current_user.username }}</strong></p>
+                <a href="{{ url_for('user.logout') }}" class="btn-primary px-3 py-1 rounded text-md">Logout</a>
+                {% else%}
+                <a href="{{ url_for('user.login') }}" class="btn-primary px-3 py-1 rounded text-md">Login</a>
+
+                {% endif %}
+
+            </div>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="container mx-auto py-12 px-6">
+        <h2 class="text-2xl font-bold mb-6 text-center">Why Choose JAMB Prep?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white p-6 rounded shadow text-center">
+                <i class="fas fa-users text-blue-500 text-4xl mb-4"></i>
+                <h3 class="text-xl font-bold">Peer-to-Peer Chat</h3>
+                <p class="mt-2">Collaborate with fellow students to share tips and solve challenges.</p>
+                <p class="mt-2 font-bold">Coming soon</p>
+            </div>
+            <div class="bg-white p-6 rounded shadow text-center">
+                <i class="fas fa-clock text-blue-500 text-4xl mb-4"></i>
+                <h3 class="text-xl font-bold">Mock Exams</h3>
+                <p class="mt-2">Simulate real JAMB exams with timed practice sessions.</p>
+            </div>
+            <div class="bg-white p-6 rounded shadow text-center">
+                <i class="fas fa-chart-line text-blue-500 text-4xl mb-4"></i>
+                <h3 class="text-xl font-bold">Track Your Progress</h3>
+                <p class="mt-2">Analyze your performance with detailed progress reports.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call-to-Action Section -->
+    <section class="bg-blue-500 text-white py-12">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-4">Ready to Ace Your JAMB Exam?</h2>
+            <p class="mb-6">Sign up now and start your journey to success!</p>
+            <a href="{{ url_for('exam.select_subject') }}" class="btn-primary px-6 py-3 rounded text-lg">Take a free practice test</a>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-800 text-gray-300 py-6">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 JAMB Prep. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

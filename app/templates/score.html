@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Score</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="container mx-auto px-4 sm:px-6 py-6">
+        <div class="bg-white shadow-md rounded-lg p-4 sm:p-6">
+            <h1 class="text-2xl sm:text-3xl font-bold text-center text-blue-600 mb-6">Your Exam Scores</h1>
+            <div class="text-center mb-6">
+                <p class="text-base sm:text-lg"><strong>Total Score:</strong> {{ "%.1f"|format(total_score* 400/180) }} out of 400</p>
+                <p class="text-base sm:text-lg"><strong>Subjects Attempted:</strong> {{ total_subjects }}</p>
+            </div>
+
+            <div class="space-y-4">
+                {% for subject, data in score_data.items() %}
+                    <div class="bg-gray-50 p-4 rounded-lg shadow flex flex-col sm:flex-row sm:items-center sm:justify-around">
+                        <div>
+                            <p class="text-sm sm:text-base"><strong>Subject:</strong> {{ subject }}</p>
+                            <p class="text-sm sm:text-base"><strong>Correct Answers:</strong> {{ data.correct }}</p>
+                            <p class="text-sm sm:text-base"><strong>Total Questions:</strong> {{ data.total-1 }}</p>
+                        </div>
+                        <div class="mt-2 sm:mt-0">
+                            <p class="text-sm sm:text-base"><strong>Percentage:</strong> {{ "%.1f"|format(data.percentage) }}%</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="mt-6 flex flex-col sm:flex-row sm:justify-center gap-4">
+                <a href="{{ url_for('exam.home') }}"
+                   class="inline-block bg-blue-600 text-white font-semibold text-sm sm:text-base py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition text-center">
+                    Back to Home
+                </a>
+                <a href="{{ url_for('exam.select_subject') }}"
+                   class="inline-block bg-blue-600 text-white font-semibold text-sm sm:text-base py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition text-center">
+                    Take Exam Again
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

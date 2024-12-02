@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grouped Score History</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="container mx-auto p-4 sm:p-6">
+        <h1 class="text-2xl sm:text-3xl font-bold text-center text-blue-600 mb-6">Score History</h1>
+
+        {% if grouped_totals %}
+            <div class="grid grid-cols-1 gap-6">
+                {% for group in grouped_totals %}
+                    <div class="bg-white shadow-md rounded-lg p-6">
+                        <h2 class="text-lg font-semibold text-blue-600 mb-4">Score : {{ "%.0f"|format(group.percentage*400) }} </h2>
+                        <p class="text-gray-700"><strong>Total Correct:</strong> {{ group.total_correct }}</p>
+                        <p class="text-gray-700"><strong>Total Questions:</strong> {{ group.total_questions }}</p>
+                        <p class="text-gray-700"><strong> Percentage:</strong> {{ "%.1f"|format(group.percentage) }}%</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+                            {% for score in group.scores %}
+                                <div class="bg-gray-50 border rounded-lg p-4">
+                                    <p class="text-gray-700"><strong>Subject:</strong> {{ score.subject }}</p>
+                                    <p class="text-gray-700"><strong>Correct:</strong> {{ score.correct_answers }}</p>
+                                    <p class="text-gray-700"><strong>Questions:</strong> {{ score.total_questions-1 }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center text-gray-500">No scores available.</p>
+        {% endif %}
+        <div class="mt-6 flex flex-col sm:flex-row sm:justify-evenly gap-4">
+            <a href="{{ url_for('exam.home') }}"
+               class="inline-block bg-blue-600 text-white font-semibold text-sm sm:text-base py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition text-center">
+                Back to Home
+            </a>
+            <a href="{{ url_for('exam.select_subject') }}"
+               class="inline-block bg-blue-600 text-white font-semibold text-sm sm:text-base py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition text-center">
+                Take Exam Again
+            </a>
+        </div>
+    </div>
+</body>
+</html>
