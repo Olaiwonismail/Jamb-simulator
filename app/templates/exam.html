@@ -12,6 +12,8 @@
         }
     </style>
     <script>
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    document.cookie = `timezone=${userTimeZone}; path=/;`;
     const endTime = new Date('{{end_time}}').getTime()
     function updateTimer() {
       const now = new Date().getTime();
