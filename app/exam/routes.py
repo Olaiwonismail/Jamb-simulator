@@ -51,7 +51,7 @@ def start_exam(list):
 
     # questions = questions.limit(41)
     question_list = [questions_1,questions_2,questions_3,eng_questions]
-    print(question_list)
+    # print(question_list)
     for item in question_list:
         if len(item)==0:
             flash("""Please not some subjects are not availabe.
@@ -82,17 +82,26 @@ def start_exam(list):
     session[list[1]] = empty_list2
     session[list[2]] = empty_list3
     session[list[3]] = empty_list4
-    print(list[0])
+    # print(list[0])
     # print('hi',session['question'] )
     return render_template('start_exam.html',list=list)
 
 
-
+from pytz import timezone, all_timezones
 
 @exam.route('/my_exam', methods=['GET', 'POST'])
 @login_required
 
 def my_exam():
+    user_timezone = request.cookies.get('timezone', 'UTC')  # Default to UTC if not provided
+
+    # Validate the time zone
+    if user_timezone not in all_timezones:
+        return {"error": "Invalid timezone"}, 400
+
+    # Convert the current time to the user's time zone
+    user_tz = timezone(user_timezone)
+    now = datetime.now(user_tz)
     session['exam_in_progress'] = True
     subject = request.args.get('subject', 'English Language')
     if session.get(subject):
@@ -120,9 +129,9 @@ def my_exam():
         selected_answer = request.form.get('answer')  # Retrieve selected answer
         session[subject][page][1] = selected_answer
     num = len(session[subject])
-    print(session['exam_in_progress'])
+    # print(session['exam_in_progress'])
     if 'end_time' not in session:
-        session['end_time'] = (datetime.now()+timedelta(hours=2)).isoformat()
+         session['end_time'] = (now + timedelta(hours=2)).isoformat()
     return render_template(
         'exam.html',
         end_time = session['end_time'],
@@ -135,37 +144,6 @@ def my_exam():
         page=page
     )
 
-# @exam.route('/submit/',methods = ['GET','POST'])
-# def submit():
-#     session['exam_in_progress'] = False
-#     list = session.get('subjects')
-#     list = list.split(',')
-#     subject1_score=0
-#     subject2_score=0
-#     subject3_score=0
-#     subject4_score=0
-#     subject1 = session.get(list[0])
-#     subject2 = session.get(list[1])
-#     subject3 = session.get(list[2])
-#     subject4 = session.get(list[3])
-#     for item in subject1:
-#         if item[1]:
-#             if item[0].correct_option == item[1] :
-#                 subject1_score+=1
-#     for item in subject2:
-#         if item[1]:
-#             if item[0].correct_option == item[1] :
-#                 subject2_score+=1
-#     for item in subject3:
-#         if item[1]:
-#             if item[0].correct_option == item[1] :
-#                 subject3_score+=1
-#     for item in subject4:
-#         if item[1]:
-#             if item[0].correct_option == item[1] :
-#                 subject4_score+=1
-#     session.clear()
-#     return f'{subject4_score,subject2_score,subject1_score,subject3_score} {subject4_score+subject2_score+subject1_score+subject3_score}'
 
 @exam.route('/submit', methods=['GET', 'POST'])
 @login_required
