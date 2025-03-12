@@ -10,7 +10,7 @@ JAMB Simulator is a practice application designed to help students prepare for t
 - **User Progress Tracking** – Monitor performance over time.
 
 ## 🛠 Tech Stack
-- **Backend:** Python, Flask
+- **Backend:**  Flask
 - **Frontend:** HTML, CSS, JavaScript
 - **Database:** SQLite / PostgreSQL
 
